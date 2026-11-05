@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Worship At The Shop</title>
+<meta name="description" content="Thursdays at the Shop. This week's passage, song, RSVP and prayer wall.">
+<meta property="og:title" content="Worship At The Shop">
+<meta property="og:description" content="This Thursday · 6:30 PM · Tap to RSVP, vote on the menu and see this week's passage.">
+<meta name="theme-color" content="#141414">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="The Shop">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141414'/%3E%3Cpath d='M32 10c2.5 8 12 12.5 12 23a12 12 0 0 1-24 0c0-4.8 2.4-8.4 4.8-10.8 0 4.8 2.4 7.2 4.8 7.2 0-7.2-2.4-13.2 2.4-19.4z' fill='%237CC0EC'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141414; --muted:#5E5A54; --brown:#7A5C3E; --card:#F7F2EA; --line:#E6DCCD; --field:#D9CDBB;
+    --blue:#1D6FA8; --blue-soft:#EAF3FA; --green:#2E7D4F; --green-soft:#E3EFE6; --green-ink:#1F5A37;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#141414}
+  body{font-family:Inter,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.5;color:var(--ink);-webkit-text-size-adjust:100%}
+  .wrap{max-width:520px;margin:0 auto;background:#fff;min-height:100vh;display:flex;flex-direction:column}
+  header{background:var(--ink);color:#fff;padding:calc(36px + env(safe-area-inset-top)) 20px 28px;display:flex;flex-direction:column;gap:10px}
+  .eyebrow{display:flex;align-items:center;gap:8px;color:#7CC0EC;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  h1{margin:0;font-family:'Bricolage Grotesque',Inter,sans-serif;font-weight:800;font-size:40px;line-height:1.02;letter-spacing:-.02em}
+  header p{margin:0;color:#D6D0C7}
+  .series{display:inline-flex;align-self:flex-start;margin-top:4px;padding:4px 12px;border-radius:999px;border:1px solid #3A3A3A;color:#fff;font-size:13px;font-weight:600}
+  main{padding:24px 16px 40px;display:flex;flex-direction:column;gap:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px}
+  .label{margin:0;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--brown)}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .small{font-size:13px;color:var(--muted)}
+  .display{margin:0;font-family:'Bricolage Grotesque',Inter,sans-serif;font-weight:600;font-size:22px;line-height:1.28}
+  .verse{margin:0;font-family:'Bricolage Grotesque',Inter,sans-serif;font-weight:600;font-size:24px;line-height:1.25}
+  .ref{margin:0;color:var(--blue);font-weight:600}
+  .divider{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px}
+  p{margin:0}
+  a{color:var(--blue)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 16px;border-radius:12px;font:600 15px Inter,system-ui,sans-serif;cursor:pointer;text-decoration:none;border:1px solid var(--ink);background:#fff;color:var(--ink);-webkit-tap-highlight-color:transparent}
+  .btn.primary{border:0;background:var(--blue);color:#fff}
+  .btn.on{border:0;background:var(--blue);color:#fff}
+  .btn[disabled]{opacity:.55;cursor:default}
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .links .btn.primary{grid-column:1 / -1}
+  label.check{display:flex;align-items:center;gap:10px;min-height:44px;cursor:pointer}
+  label.check input{width:20px;height:20px;accent-color:var(--blue)}
+  .field-label{font-size:14px;color:var(--muted)}
+  input[type=text],textarea{width:100%;min-height:44px;border-radius:12px;border:1px solid var(--field);background:#fff;color:var(--ink);padding:12px 14px;font:16px Inter,system-ui,sans-serif;resize:none}
+  input[type=text]{padding:0 14px}
+  input::placeholder,textarea::placeholder{color:#7D7368}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:999px;background:var(--green-soft);color:var(--green-ink);font-size:14px;font-weight:500}
+  .opt{display:flex;flex-direction:column;gap:8px;text-align:left;width:100%;padding:12px 14px;border-radius:12px;cursor:pointer;color:var(--ink);font:15px Inter,system-ui,sans-serif;background:#fff;border:1px solid var(--field)}
+  .opt.sel{background:var(--blue-soft);border:2px solid var(--blue);padding:11px 13px}
+  .opt .top{display:flex;justify-content:space-between;gap:8px;width:100%}
+  .opt b{font-weight:600}
+  .bar{display:block;width:100%;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+  .bar i{display:block;height:6px;border-radius:3px;background:var(--green);width:0;transition:width .3s}
+  .post{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+  .who{font-size:13px;color:var(--brown);font-weight:600}
+  .pray{align-self:flex-start;min-height:44px;padding:0 16px;border-radius:999px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;border:1px solid var(--ink);background:#fff;color:var(--ink)}
+  .pray.on{border:0;background:var(--green);color:#fff}
+  .empty{color:var(--muted);text-align:center;padding:6px 0}
+  .note{font-size:14px;color:var(--green-ink);min-height:20px}
+  .upcoming{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+  .upcoming li span:first-child{white-space:nowrap}
+  .upcoming li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+  .upcoming li:first-child{border-top:0}
+  footer{background:var(--ink);color:#D6D0C7;text-align:center;padding:28px 20px calc(36px + env(safe-area-inset-bottom));font-size:14px;margin-top:auto}
+  .hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5.5 1-8.5z"/></svg>
+      <span id="when">Thursday · 6:30–8:00 PM</span>
+    </div>
+    <h1>Worship At The Shop</h1>
+    <p>The Shop · fire pits lit at 6:30 · stay and hang as long as you like after 8</p>
+    <span class="series hide" id="series"></span>
+  </header>
+
+  <main id="main"></main>
+
+  <footer>See you around the fire.</footer>
+</div>
+
+<script src="config.js"></script>
+<script src="weeks.js"></script>
+<script>
+(function () {
+  var API = window.WATS_API || '';
+  var WEEKS = window.WEEKS || [];
+  var TZ = 'America/Chicago';
+  var main = document.getElementById('main');
+
+  // ---------- helpers ----------
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem('wats_' + k)); localStorage.setItem('wats_' + k, JSON.stringify(v)); } catch (e) { return null; } }
+  function todayCT() {
+    var q = new URLSearchParams(location.search).get('date');
+    if (q && /^\d{4}-\d{2}-\d{2}$/.test(q)) return q;
+    return new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+  }
+  function parseDate(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function nice(s, opts) { return parseDate(s).toLocaleDateString('en-US', opts || { weekday: 'long', month: 'short', day: 'numeric' }); }
+  function key(w) { return 'w' + w.date.replace(/-/g, ''); }
+  function q(s) { return encodeURIComponent(s); }
+
+  var device = store('device');
+  if (!device) { device = 'd' + Math.random().toString(36).slice(2) + Date.now().toString(36); store('device', device); }
+
+  var today = todayCT();
+  var idx = WEEKS.findIndex(function (w) { return w.date >= today; });
+  var week = idx >= 0 ? WEEKS[idx] : null;
+  var nextGathering = null;
+  if (week) for (var i = idx; i < WEEKS.length; i++) if (!WEEKS[i].off) { nextGathering = WEEKS[i]; break; }
+  var wk = week ? key(week) : 'none';
+  var mine = store('mine_' + wk) || {};
+  function saveMine() { store('mine_' + wk, mine); }
+  var prayedIds = store('prayed') || {};
+  var state = { coming: [], votes: {}, prayers: [], answers: [] };
+
+  function api(payload) {
+    if (!API) return Promise.resolve(null);
+    payload.week = wk; payload.device = device;
+    return fetch(API, { method: 'POST', body: JSON.stringify(payload) })
+      .then(function (r) { return r.json(); })
+      .then(function (s) { if (s && s.ok !== false) { state = s; paint(); } return s; })
+      .catch(function () { return null; });
+  }
+  function load() {
+    if (!API) return;
+    fetch(API + '?week=' + wk).then(function (r) { return r.json(); }).then(function (s) { state = s; paint(); }).catch(function () {});
+  }
+
+  // ---------- header ----------
+  if (week) {
+    document.getElementById('when').textContent = week.off ? nice(week.date) : nice(week.date) + ' · 6:30–8:00 PM';
+    if (!week.off) { var sEl = document.getElementById('series'); sEl.textContent = week.series + ' · Week ' + week.number + ' of 6'; sEl.classList.remove('hide'); }
+  }
+
+  // ---------- static sections ----------
+  var html = '';
+  if (!week) {
+    html += '<section class="card"><h2 class="label">Coming soon</h2><p class="display">The next series is on its way.</p><p>Watch the group text for the start date.</p></section>';
+  } else if (week.off) {
+    html += '<section class="card"><h2 class="label">This week</h2><p class="display">' + esc(week.title) + '</p><p>' + esc(week.note) + '</p></section>';
+    if (nextGathering) html += preview(nextGathering);
+  } else {
+    html += weekCard(week) + songCard(week) + rsvpCard() + menuCard(week) + beforeCard(week);
+  }
+  if (week) html += prayerCard() + questionCard() + upcomingCard();
+  main.innerHTML = html;
+
+  function weekCard(w) {
+    return '<section class="card" aria-labelledby="h-week">' +
+      '<h2 class="label" id="h-week">Thursday’s question</h2>' +
+      '<p class="display">' + esc(w.question) + '</p>' +
+      '<div class="divider" style="gap:10px">' +
+        '<p class="verse">“' + esc(w.verse.text) + '”</p>' +
+        '<p class="ref">' + esc(w.verse.ref) + ' <span class="small">(KJV)</span></p>' +
+        '<a class="btn" href="https://www.biblegateway.com/passage/?search=' + q(w.search) + '&version=ESV" target="_blank" rel="noopener">Read ' + esc(w.passage) + '</a>' +
+      '</div>' +
+      '<div class="divider"><p class="label">Your focus this week</p><p>' + esc(w.focus) + '</p></div>' +
+    '</section>';
+  }
+  function songCard(w) {
+    var s = w.song, query = s.title + ' ' + s.artist;
+    var links = s.noLinks ? '' :
+      '<div class="links">' +
+        '<a class="btn primary" target="_blank" rel="noopener" href="' + esc(s.amazon || ('https://music.amazon.com/search/' + q(query))) + '">Listen on Amazon Music</a>' +
+        '<a class="btn" target="_blank" rel="noopener" href="https://open.spotify.com/search/' + q(query) + '">Spotify</a>' +
+        '<a class="btn" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=' + q(query) + '">YouTube</a>' +
+      '</div><p class="small">Give it a listen before Thursday so you know it when we sing it.</p>';
+    return '<section class="card" aria-labelledby="h-song"><h2 class="label" id="h-song">This week’s song</h2>' +
+      '<p class="display">' + esc(s.title) + '</p><p class="small" style="font-size:15px">' + esc(s.artist) + '</p>' + links + '</section>';
+  }
+  function rsvpCard() {
+    return '<section class="card" aria-labelledby="h-rsvp"><h2 class="label" id="h-rsvp">Are you coming?</h2>' +
+      '<div style="display:flex;flex-direction:column;gap:6px"><label class="field-label" for="name">Your first name</label>' +
+      '<input id="name" type="text" autocomplete="given-name" placeholder="First name" maxlength="40"></div>' +
+      '<div class="grid2"><button type="button" class="btn" id="in">I’m in</button><button type="button" class="btn" id="out">Can’t make it</button></div>' +
+      '<label class="check"><input type="checkbox" id="plus"><span>I’m bringing a friend</span></label>' +
+      '<p class="note" id="rsvp-note" aria-live="polite"></p>' +
+      '<div class="divider" style="gap:10px"><p style="font-weight:600" id="coming-label"></p><div class="chips" id="coming"></div></div></section>';
+  }
+  function voteCloses(w) { var d = parseDate(w.date); d.setDate(d.getDate() - 2); d.setHours(23, 59, 59); return d; }
+  function menuCard(w) {
+    return '<section class="card" aria-labelledby="h-menu"><div class="row"><h2 class="label" id="h-menu">Vote on the menu</h2>' +
+      '<span class="small" id="vote-when"></span></div><div id="menu" style="display:flex;flex-direction:column;gap:10px"></div></section>';
+  }
+  function beforeCard(w) {
+    return '<section class="card" aria-labelledby="h-before"><h2 class="label" id="h-before">Before Thursday</h2>' +
+      '<p class="display" style="font-size:20px">' + esc(w.fireNight ? 'What question has this series stirred up for you?' : w.question) + '</p>' +
+      '<label class="field-label" for="answer">' + (w.fireNight ? 'Share it here, or drop it anonymously in the question box below' : 'Share a first thought. One sentence is plenty.') + '</label>' +
+      '<textarea id="answer" rows="2" maxlength="600" placeholder="Your answer"></textarea>' +
+      '<button type="button" class="btn primary" id="share">Share with the group</button>' +
+      '<div id="answers" style="display:flex;flex-direction:column;gap:10px"></div></section>';
+  }
+  function prayerCard() {
+    return '<section class="card" aria-labelledby="h-pray"><h2 class="label" id="h-pray">Prayer wall</h2>' +
+      '<label class="field-label" for="prayer">What can we pray for?</label>' +
+      '<textarea id="prayer" rows="3" maxlength="1000" placeholder="Share as much or as little as you want"></textarea>' +
+      '<label class="check"><input type="checkbox" id="anon" checked><span>Post anonymously</span></label>' +
+      '<button type="button" class="btn primary" id="add-prayer">Add to the wall</button>' +
+      '<p class="note" id="prayer-note" aria-live="polite"></p>' +
+      '<div id="prayers" style="display:flex;flex-direction:column;gap:10px"></div></section>';
+  }
+  function questionCard() {
+    return '<section class="card" aria-labelledby="h-qbox"><h2 class="label" id="h-qbox">Question box</h2>' +
+      '<p>Got a question about God, the Bible, or something we talked about? Drop it here. It’s anonymous, and we’ll answer the best ones around the fire on Fire Night.</p>' +
+      '<label class="field-label" for="qbox">Your question</label>' +
+      '<textarea id="qbox" rows="2" maxlength="1000" placeholder="Ask anything"></textarea>' +
+      '<button type="button" class="btn" id="send-q">Drop it in the box</button>' +
+      '<p class="note" id="q-note" aria-live="polite"></p></section>';
+  }
+  function upcomingCard() {
+    var rows = WEEKS.slice(idx + 1, idx + 5).map(function (w) {
+      return '<li><span>' + esc(nice(w.date, { weekday: 'short', month: 'short', day: 'numeric' })) + '</span><span class="small" style="font-size:15px;text-align:right">' +
+        esc(w.off ? 'No gathering · ' + w.title : (w.fireNight ? 'Fire Night' : w.question)) + '</span></li>';
+    }).join('');
+    if (!rows) return '';
+    return '<section class="card" aria-labelledby="h-up"><h2 class="label" id="h-up">Coming up</h2><ul class="upcoming">' + rows + '</ul></section>';
+  }
+  function preview(w) {
+    return '<section class="card"><h2 class="label">Next time we gather</h2><p class="display">' + esc(nice(w.date)) + '</p>' +
+      '<p>' + esc(w.fireNight ? 'Fire Night: your questions, answered around the fire.' : w.question) + '</p></section>';
+  }
+
+  // ---------- dynamic painting ----------
+  function name() { var n = document.getElementById('name'); return n ? n.value.trim() : (store('name') || ''); }
+  function paint() {
+    var c = document.getElementById('coming');
+    if (c) {
+      var list = state.coming.slice();
+      if (!API && mine.rsvp === 'in') { list.push(name() || 'You'); if (mine.plus) list.push((name() || 'You') + '’s friend'); }
+      list.unshift('Tommy & Leah (hosts)');
+      c.innerHTML = list.map(function (n) { return '<span class="chip">' + esc(n) + '</span>'; }).join('');
+      var guests = list.length - 1;
+      document.getElementById('coming-label').textContent = guests === 0 ? 'Be the first to RSVP' : guests + (guests === 1 ? ' person' : ' people') + ' coming so far';
+      document.getElementById('in').className = 'btn' + (mine.rsvp === 'in' ? ' on' : '');
+      document.getElementById('out').className = 'btn' + (mine.rsvp === 'out' ? ' on' : '');
+      document.getElementById('plus').checked = !!mine.plus;
+    }
+    var m = document.getElementById('menu');
+    if (m && week && week.menu) {
+      var closed = new Date() > voteCloses(week);
+      var votes = Object.assign({}, state.votes);
+      if (!API && mine.vote) votes[mine.vote] = (votes[mine.vote] || 0) + 1;
+      var total = Object.keys(votes).reduce(function (a, k) { return a + votes[k]; }, 0);
+      var winner = null, best = 0;
+      week.menu.forEach(function (o) { if ((votes[o] || 0) > best) { best = votes[o]; winner = o; } });
+      document.getElementById('vote-when').textContent = closed ? (winner ? 'Voting closed' : 'Voting closed') : 'Closes ' + voteCloses(week).toLocaleDateString('en-US', { weekday: 'short' }) + ' night';
+      m.innerHTML = week.menu.map(function (o, i) {
+        var n = votes[o] || 0, pct = total ? Math.round(n / total * 100) : 0, sel = mine.vote === o;
+        return '<button type="button" class="opt' + (sel ? ' sel' : '') + '" data-opt="' + i + '" aria-pressed="' + sel + '"' + (closed ? ' disabled' : '') + '>' +
+          '<span class="top"><b>' + esc(o) + (closed && o === winner ? ' — on the menu!' : '') + '</b><span class="small" style="font-size:14px">' + n + (n === 1 ? ' vote' : ' votes') + '</span></span>' +
+          '<span class="bar"><i style="width:' + pct + '%"></i></span></button>';
+      }).join('');
+    }
+    var a = document.getElementById('answers');
+    if (a) a.innerHTML = state.answers.map(function (x) { return '<div class="post"><span class="who">' + esc(x.name) + '</span><span>' + esc(x.text) + '</span></div>'; }).join('');
+    var p = document.getElementById('prayers');
+    if (p) {
+      p.innerHTML = state.prayers.length ? state.prayers.map(function (x) {
+        var on = !!prayedIds[x.id];
+        return '<div class="post"><span class="who">' + esc(x.name) + '</span><span style="white-space:pre-line">' + esc(x.text) + '</span>' +
+          '<button type="button" class="pray' + (on ? ' on' : '') + '" data-pray="' + esc(x.id) + '" aria-pressed="' + on + '">' + (on ? 'You prayed' : 'I prayed for this') + ' · ' + x.prayed + '</button></div>';
+      }).join('') : '<p class="empty">Nothing on the wall yet. You can be the first.</p>';
+    }
+  }
+
+  // ---------- events ----------
+  var nameEl = document.getElementById('name');
+  if (nameEl) { nameEl.value = store('name') || ''; nameEl.addEventListener('input', function () { store('name', nameEl.value.trim()); }); }
+  function note(id, text) { var el = document.getElementById(id); if (el) { el.textContent = text; setTimeout(function () { if (el.textContent === text) el.textContent = ''; }, 4000); } }
+
+  function rsvp(status) {
+    if (status === 'in' && !name()) { note('rsvp-note', 'Add your first name so we know who’s coming.'); if (nameEl) nameEl.focus(); return; }
+    mine.rsvp = status; if (status === 'out') mine.plus = false; saveMine(); paint();
+    note('rsvp-note', status === 'in' ? 'Got it. See you Thursday!' : 'Thanks for letting us know. You’ll be missed.');
+    api({ action: 'rsvp', name: name(), status: status, plusOne: !!mine.plus });
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    if (t.id === 'in') rsvp('in');
+    else if (t.id === 'out') rsvp('out');
+    else if (t.dataset.opt != null && !t.disabled) {
+      var o = week.menu[+t.dataset.opt];
+      if (API) { if (mine.vote) state.votes[mine.vote] = Math.max(0, (state.votes[mine.vote] || 1) - 1); state.votes[o] = (state.votes[o] || 0) + 1; }
+      mine.vote = o; saveMine(); paint();
+      api({ action: 'vote', option: o });
+    }
+    else if (t.id === 'share') {
+      var ta = document.getElementById('answer'), txt = ta.value.trim(); if (!txt) return;
+      state.answers.unshift({ name: name() || 'Someone', text: txt }); ta.value = ''; paint();
+      api({ action: 'answer', name: name(), text: txt });
+    }
+    else if (t.id === 'add-prayer') {
+      var pr = document.getElementById('prayer'), pt = pr.value.trim(); if (!pt) return;
+      var anon = document.getElementById('anon').checked;
+      if (!API) state.prayers.unshift({ id: 'local' + Date.now(), name: anon ? 'Anonymous' : (name() || 'Anonymous'), text: pt, prayed: 0 });
+      pr.value = ''; paint(); note('prayer-note', 'Added. We’ll be praying.');
+      api({ action: 'prayer', name: name(), anon: anon, text: pt });
+    }
+    else if (t.id === 'send-q') {
+      var qb = document.getElementById('qbox'), qt = qb.value.trim(); if (!qt) return;
+      qb.value = ''; note('q-note', 'In the box. Thanks for asking.');
+      api({ action: 'question', text: qt });
+    }
+    else if (t.dataset.pray) {
+      var id = t.dataset.pray, on = !prayedIds[id];
+      if (on) prayedIds[id] = 1; else delete prayedIds[id];
+      store('prayed', prayedIds);
+      state.prayers.forEach(function (x) { if (x.id === id) x.prayed = Math.max(0, x.prayed + (on ? 1 : -1)); });
+      paint();
+      api({ action: 'pray', id: id, delta: on ? 1 : -1 });
+    }
+  });
+  var plus = document.getElementById('plus');
+  if (plus) plus.addEventListener('change', function () {
+    mine.plus = plus.checked;
+    if (plus.checked) { rsvp('in'); } else { saveMine(); paint(); if (mine.rsvp === 'in') api({ action: 'rsvp', name: name(), status: 'in', plusOne: false }); }
+  });
+
+  paint();
+  load();
+  setInterval(load, 60000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+/**
+ * Worship At The Shop — backend for the weekly page.
+ * Lives inside the "Worship At The Shop — Responses" Google Sheet.
+ * Deployed as a web app (Execute as: me, Who has access: Anyone).
+ *
+ * To hide a prayer or answer from the site, tick its "hidden" box in the sheet.
+ */
+
+var SHEETS = {
+  rsvp:      ['timestamp', 'week', 'device', 'name', 'status', 'plusOne'],
+  votes:     ['timestamp', 'week', 'device', 'option'],
+  prayers:   ['timestamp', 'week', 'id', 'name', 'text', 'prayedCount', 'hidden'],
+  answers:   ['timestamp', 'week', 'id', 'name', 'text', 'hidden'],
+  questions: ['timestamp', 'week', 'text']
+};
+
+function setup() {
+  Object.keys(SHEETS).forEach(function (name) { sheet_(name); });
+  var first = SpreadsheetApp.getActive().getSheetByName('Sheet1');
+  if (first && SpreadsheetApp.getActive().getSheets().length > 1) SpreadsheetApp.getActive().deleteSheet(first);
+}
+
+function sheet_(name) {
+  var ss = SpreadsheetApp.getActive();
+  var sh = ss.getSheetByName(name);
+  if (!sh) {
+    sh = ss.insertSheet(name);
+    sh.appendRow(SHEETS[name]);
+    sh.setFrozenRows(1);
+    var hiddenCol = SHEETS[name].indexOf('hidden');
+    if (hiddenCol >= 0) sh.getRange(2, hiddenCol + 1, 999, 1).insertCheckboxes();
+  }
+  return sh;
+}
+
+function rows_(name) {
+  var values = sheet_(name).getDataRange().getValues();
+  var head = values.shift();
+  return values.map(function (r, i) {
+    var o = { _row: i + 2 };
+    head.forEach(function (k, j) { o[k] = r[j]; });
+    return o;
+  }).filter(function (o) { return o.timestamp !== '' && o.timestamp !== null; });
+}
+
+function truthy_(v) { return v === true || String(v).toUpperCase() === 'TRUE'; }
+
+function clean_(s, n) {
+  return String(s == null ? '' : s).replace(/[<>]/g, '').replace(/^[=+\-@]/, "'$&").trim().slice(0, n);
+}
+
+function json_(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function latestByDevice_(list) {
+  var by = {};
+  list.forEach(function (r) { by[r.device] = r; });
+  return Object.keys(by).map(function (k) { return by[k]; });
+}
+
+function state_(week) {
+  var coming = [];
+  latestByDevice_(rows_('rsvp').filter(function (r) { return String(r.week) === week; }))
+    .forEach(function (r) {
+      if (r.status === 'in') {
+        var n = r.name || 'Someone';
+        coming.push(n);
+        if (truthy_(r.plusOne)) coming.push(n + "'s friend");
+      }
+    });
+
+  var votes = {};
+  latestByDevice_(rows_('votes').filter(function (r) { return String(r.week) === week; }))
+    .forEach(function (r) { votes[r.option] = (votes[r.option] || 0) + 1; });
+
+  var cutoff = new Date(Date.now() - 1000 * 60 * 60 * 24 * 28);
+  var prayers = rows_('prayers')
+    .filter(function (r) { return !truthy_(r.hidden) && new Date(r.timestamp) >= cutoff; })
+    .reverse().slice(0, 30)
+    .map(function (r) { return { id: r.id, name: r.name, text: r.text, prayed: Number(r.prayedCount) || 0 }; });
+
+  var answers = rows_('answers')
+    .filter(function (r) { return String(r.week) === week && !truthy_(r.hidden); })
+    .reverse()
+    .map(function (r) { return { name: r.name, text: r.text }; });
+
+  return { coming: coming, votes: votes, prayers: prayers, answers: answers };
+}
+
+function doGet(e) {
+  var week = clean_(e && e.parameter && e.parameter.week, 12);
+  return json_(state_(week));
+}
+
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var d = JSON.parse(e.postData.contents || '{}');
+    var week = clean_(d.week, 12);
+    var device = clean_(d.device, 40);
+    var now = new Date();
+    switch (d.action) {
+      case 'rsvp':
+        sheet_('rsvp').appendRow([now, week, device, clean_(d.name, 40), d.status === 'in' ? 'in' : 'out', !!d.plusOne]);
+        break;
+      case 'vote':
+        sheet_('votes').appendRow([now, week, device, clean_(d.option, 60)]);
+        break;
+      case 'prayer':
+        var pt = clean_(d.text, 1000);
+        if (pt) sheet_('prayers').appendRow([now, week, Utilities.getUuid(), d.anon ? 'Anonymous' : (clean_(d.name, 40) || 'Anonymous'), pt, 0, false]);
+        break;
+      case 'answer':
+        var at = clean_(d.text, 600);
+        if (at) sheet_('answers').appendRow([now, week, Utilities.getUuid(), clean_(d.name, 40) || 'Someone', at, false]);
+        break;
+      case 'question':
+        var qt = clean_(d.text, 1000);
+        if (qt) sheet_('questions').appendRow([now, week, qt]);
+        break;
+      case 'pray':
+        var sh = sheet_('prayers');
+        var col = SHEETS.prayers.indexOf('prayedCount') + 1;
+        rows_('prayers').forEach(function (r) {
+          if (r.id === d.id) {
+            var next = Math.max(0, (Number(r.prayedCount) || 0) + (d.delta < 0 ? -1 : 1));
+            sh.getRange(r._row, col).setValue(next);
+          }
+        });
+        break;
+    }
+    return json_(Object.assign({ ok: true }, state_(week)));
+  } catch (err) {
+    return json_({ ok: false, error: String(err) });
+  } finally {
+    lock.releaseLock();
+  }
+}
